@@ -926,6 +926,7 @@ require 'ostruct'
 
 options = OpenStruct.new
 options.num_regs = 1
+options.testname = ""
 
 OptionParser.new do |opts|
   opts.banner = "Usage: mk_tutorial_9 [-n <num_registers>]"
@@ -934,10 +935,16 @@ OptionParser.new do |opts|
           "Number of registers to instantiate") do |n|
     options.num_regs = n.to_i
   end
+
+  opts.on("-o", "--output filename", "Output testname") do |name|
+    options.testname = name
+  end
+
 end.parse(ARGV)
 
 num_regs = options.num_regs
-testname = "tutorial_9_n#{num_regs}.sv"
+testname = options.testname
+testname = "tutorial_9_n#{num_regs}.sv" if testname == ""
 
 puts "Generating test with #{num_regs} registers in \"#{testname}\""
 

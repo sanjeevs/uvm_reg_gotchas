@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require 'pp'
+
+sim = "incisive"
+
+benchmark = {}
+
+1.upto(5) do |i|
+  n = i * 10
+  output_name = "tutorial_9_n#{n}"
+  puts `../src/mk_tutorial_9 -n #{i*10} -o #{output_name}.sv`
+  puts "Running #{sim} with #{output_name}.sv"
+  puts
+  log_file = "#{sim}_#{output_name}.log"
+  `rm -rf #{log_file}`
+  `make #{sim} TEST=#{output_name}`
+  abort "Log file #{log_file} not found" unless File.exist?(log_file)
+  memory_usage = `grep Memory #{log_file}`
+  md = /\= ([\d\.]+)M total/.match(memory_usage)
+  abort "Could not extract memory usage" unless md
+  benchmark[n] = md[1].to_f
+end
+
+pp benchmark

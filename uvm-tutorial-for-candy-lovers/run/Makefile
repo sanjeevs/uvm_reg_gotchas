@@ -15,7 +15,7 @@ help:
 
 tutorial_files := no_source_code.sv
 testname       := no_test
-src_dir        := ../src
+src_dir        := .
 
 tutorial_files := $(src_dir)/$(TEST).sv
 testname := jelly_bean_reg_test
@@ -34,5 +34,6 @@ include questa.mk
 include vcs.mk
 
 clean: clean_incisive clean_vcs
+	rm -rf *.sv
 
 clean_all: clean_incisive clean_vcs clean_modelsim clean_questa 
