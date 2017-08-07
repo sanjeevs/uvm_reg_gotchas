@@ -23,12 +23,9 @@ end.parse(ARGV)
 sim = options.sim
 output = options.output
 
-benchmark = {}
-
-1.upto(5) do |i|
-  n = i * 10
+def runtest(n, sim)
   output_name = "tutorial_9_n#{n}"
-  puts `../src/mk_tutorial_9 -n #{i*10} -o #{output_name}.sv`
+  puts `../src/mk_tutorial_9 -n #{n} -o #{output_name}.sv`
   puts "Running #{sim} with #{output_name}.sv"
   puts
   log_file = "#{sim}_#{output_name}.log"
@@ -38,7 +35,21 @@ benchmark = {}
   memory_usage = `grep Memory #{log_file}`
   md = /\= ([\d\.]+)M total/.match(memory_usage)
   abort "Could not extract memory usage" unless md
-  benchmark[n] = md[1].to_f
+  return md[1].to_f
+end
+
+benchmark = {}
+
+n = 1
+6.times do
+  benchmark[n] = runtest(n, sim)
+  n = n * 10
+end
+
+#Generate 100K to 500
+2.upto(5) do |i|
+  n = 100000 * i
+  benchmark[n] = runtest(n, sim)
 end
 
 File.open(output, "w") do |fh|
