@@ -27,14 +27,14 @@ benchmark = {}
 
 n = 1
 6.times do
-  benchmark[n] = runtest(n, sim)[:mem]
+  benchmark[n] = runtest(n: n, sim: sim, test: "tutorial_9")[:mem]
   n = n * 10
 end
 
 #Generate 100K to 500
 2.upto(5) do |i|
   n = 100000 * i
-  benchmark[n] = runtest(n, sim)[:mem]
+  benchmark[n] = runtest(n: n, sim: sim, test: "tutorial_9")[:mem]
 end
 
 File.open(output, "w") do |fh|

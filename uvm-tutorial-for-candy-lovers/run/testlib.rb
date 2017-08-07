@@ -16,7 +16,9 @@ def runtest(arg)
   if(batch) 
     system(%Q(nc run -I -g interactive -- make #{sim} TEST=#{output_name})) ||
       abort("nc job failed")
-    sleep 3 # To allow the log file to be present.
+    while(!File.exist?(log_file)) 
+      sleep 3 # To allow the log file to be present.
+    end
   else
     `make #{sim} TEST=#{output_name}`
   end
