@@ -1,7 +1,27 @@
 #!/usr/bin/env ruby
 require 'pp'
+require 'optparse'
+require 'ostruct'
 
-sim = "incisive"
+options = OpenStruct.new
+options.sim = "incisive" 
+options.output = "tutorial_9.dat"
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: runsim [-s <simulator=incisie>]"
+
+  opts.on("-s", "--sim simulator",
+          "Name of simulator to use") do |sim|
+    options.sim = sim
+  end
+
+  opts.on("-o", "--output filename", "Output testname") do |name|
+    options.output = name
+  end
+
+end.parse(ARGV)
+sim = options.sim
+output = options.output
 
 benchmark = {}
 
@@ -21,4 +41,10 @@ benchmark = {}
   benchmark[n] = md[1].to_f
 end
 
-pp benchmark
+File.open(output, "w") do |fh|
+  fh.puts "NumberOfReg,MemoryMB"
+  benchmark.each do |key, value|
+    fh.puts "#{key}, #{value}"
+  end
+end
+

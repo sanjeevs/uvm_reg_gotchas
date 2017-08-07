@@ -9,7 +9,7 @@
 # constants
 
 incisive_compile_files := $(compile_files)
-incisive_compile_opts  := $(compile_opts) -uvm +define+CL_USE_INCISIVE
+incisive_compile_opts  := $(compile_opts) -uvm +define+CL_USE_INCISIVE -64bit
 incisive_run_opts      := $(run_opts) -l incisive_$(TEST).log
 
 # targets

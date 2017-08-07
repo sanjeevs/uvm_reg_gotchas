@@ -34,6 +34,6 @@ include questa.mk
 include vcs.mk
 
 clean: clean_incisive clean_vcs
-	rm -rf *.sv
+	rm -rf *.sv *.dat
 
 clean_all: clean_incisive clean_vcs clean_modelsim clean_questa 
