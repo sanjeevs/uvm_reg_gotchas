@@ -27,9 +27,14 @@ output = options.output
 benchmark = {}
 
 n = 1
-3.times do
+5.times do
   benchmark[n] = runtest(n: n, sim: sim, test: "test_randomize")[:time]
   n = n * 10
+end
+
+2.upto(4) do |i|
+  n = 10000 * i 
+  benchmark[n] = runtest(n: n, sim: sim, test: "test_randomize")[:time]
 end
 
 File.open(output, "w") do |fh|
