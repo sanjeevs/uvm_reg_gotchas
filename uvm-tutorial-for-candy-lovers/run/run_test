@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require_relative 'testlib'
+require 'pp'
+
+pp runtest(test: 'tutorial_9', n: 1)
