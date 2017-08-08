@@ -19,7 +19,7 @@ incisive: run_incisive
 prep_incisive:
 
 run_incisive: 
-	irun $(incisive_compile_opts) $(incisive_run_opts) $(incisive_compile_files)
+	irun -licq $(incisive_compile_opts) $(incisive_run_opts) $(incisive_compile_files)
 
 clean_incisive:
 	rm -rf ./INCA_libs *.history *.log

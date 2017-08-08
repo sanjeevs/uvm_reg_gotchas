@@ -401,12 +401,27 @@ class jelly_bean_reg_sequence extends uvm_sequence#(uvm_sequence_item);
    virtual task body();
       jelly_bean_reg_block::taste_t rd_data;
       jelly_bean_reg_block::recipe_t wr_data;
+      jelly_bean_reg_block::jelly_bean_recipe_constr jb_recipe_constr;
+
+      // NC does not like method chaining (VCS is ok). hence temp variables
+      srm_reg#(jelly_bean_reg_block::recipe_t) entry;
+      int num_entries;
 
       wr_data.flavor     = jelly_bean_types::APPLE;
       wr_data.color      = jelly_bean_types::GREEN;
       wr_data.sugar_free = 0;
       wr_data.sour       = 1;
-   
+ 
+      jb_recipe_constr = jelly_bean_reg_block::jelly_bean_recipe_constr::type_id::create("jb_constr");
+      num_entries = jb_reg_block.dummy.get_num_entries();
+
+      for(int i = 0; i < num_entries; i++) begin
+        assert(jb_recipe_constr.randomize);
+        wr_data = jb_recipe_constr.get_data();
+        entry = jb_reg_block.dummy.entry_at(i);
+        entry.set(wr_data);
+      end
+
       jb_reg_block.jb_recipe_reg.write(handle, wr_data);
       jb_reg_block.jb_taste_reg.read(handle, rd_data);
    endtask: body
