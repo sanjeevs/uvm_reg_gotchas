@@ -6,7 +6,7 @@ require_relative "testlib"
 
 options = OpenStruct.new
 options.sim = "incisive" 
-options.output = "tutorial_9.dat"
+options.output = "srm_tutorial_9.dat"
 
 OptionParser.new do |opts|
   opts.banner = "Usage: runsim [-s <simulator=incisie>]"
@@ -28,7 +28,7 @@ benchmark = {}
 
 n = 1
 6.times do
-  benchmark[n] = runtest(n: n, sim: sim, test: "tutorial_9")[:mem]
+  benchmark[n] = runtest(n: n, sim: sim, test: "srm_tutorial_9", srm: 1)[:mem]
   n = n * 10
 end
 
